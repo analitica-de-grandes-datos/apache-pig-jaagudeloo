@@ -23,6 +23,6 @@ $ pig -x local -f pregunta.pig
 data = LOAD 'data.csv' USING PigStorage(',') AS (fid:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, num:int);
 --columna_2 = FOREACH data GENERATE fid, nombre AS col_2;
 apellido_tabla = FOREACH data GENERATE apellido AS col_1, SIZE(apellido) AS col_2;
-ordenar = ORDER apellido_tabla BY col_2 desc, col_1 desc;
+ordenar = ORDER apellido_tabla BY col_2 desc, col_1 asc;
 ordenar_n = LIMIT ordenar 5;
 STORE ordenar_n INTO 'output' using PigStorage(',');
