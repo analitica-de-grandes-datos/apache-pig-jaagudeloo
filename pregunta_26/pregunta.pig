@@ -22,7 +22,8 @@ $ pig -x local -f pregunta.pig
 */
 data = LOAD 'data.csv' USING PigStorage(',') AS (fid:int, nombre:chararray, apellido:chararray, fecha:chararray, color:chararray, num:int);
 tabla_nombre = FOREACH data GENERATE nombre AS col_1;
-indice = FOREACH tabla_nombre GENERATE INDEXOF(col_1,'a',1);
+consulta = FILTER tabla_nombre BY SUBSTRING(col_1, 0, 1) MATCHES 'M' OR SUBSTRING(col_1, 0, 1) MATCHES 'N' OR SUBSTRING(col_1, 0, 1) MATCHES 'O' OR SUBSTRING(col_1, 0, 1) MATCHES 'P' OR SUBSTRING(col_1, 0, 1) MATCHES 'Q' OR SUBSTRING(col_1, 0, 1) MATCHES 'R' OR SUBSTRING(col_1, 0, 1) MATCHES 'S' OR SUBSTRING(col_1, 0, 1) MATCHES 'T' OR SUBSTRING(col_1, 0, 1) MATCHES 'U' OR SUBSTRING(col_1, 0, 1) MATCHES 'V' OR SUBSTRING(col_1, 0, 1) MATCHES 'W' OR SUBSTRING(col_1, 0, 1) MATCHES 'X' OR SUBSTRING(col_1, 0, 1) MATCHES 'Y' OR SUBSTRING(col_1, 0, 1) MATCHES 'Z';
+--indice = FOREACH tabla_nombre GENERATE INDEXOF(col_1,'a',1);
 --extraccion = FOREACH tabla_fecha GENERATE REGEX_EXTRACT(col_1, '(.*)-(.*)-(.*)', 2) AS col_1;
 --nombre_color_tabla = FOREACH data GENERATE nombre AS col_1, color AS col_2;
 --color_coinc = FILTER nombre_color_tabla BY ENDSWITH(col_2,'a') OR ENDSWITH(col_2,'e') OR ENDSWITH(col_2,'i') OR ENDSWITH(col_2,'o') OR ENDSWITH(col_2,'u');
@@ -55,4 +56,4 @@ indice = FOREACH tabla_nombre GENERATE INDEXOF(col_1,'a',1);
 --replace_col3_1 = FOREACH flatten_col3 GENERATE REPLACE(mapas,'([^a-zA-Z\\s]+)','') AS mapas;
 --grupo_letras = GROUP replace_col3_1 BY mapas;
 --grupo_letras_count = FOREACH grupo_letras GENERATE group, COUNT(replace_col3_1);
-STORE indice INTO 'output' using PigStorage(',');
+STORE consulta INTO 'output' using PigStorage(',');
